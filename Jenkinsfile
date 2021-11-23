@@ -1,14 +1,15 @@
 pipeline {
   agent any
-  triggers {
-   cron('H/15 * * * *')
-  }
-  stages {
-    stage('echo') {
-      steps {
-        echo 'hello from the trigger2'
-      }
-    }
 
+  stages {
+    stage('download image') {
+      steps {
+         sh '''#!/bin/bash
+                 curl -O https://cloud-images.ubuntu.com/releases/focal/release/ubuntu-20.04-server-cloudimg-amd64.img
+         '''
+    archiveArtifacts artifacts: 'ubuntu-20.04-server-cloudimg-amd64.img', followSymlinks: false
+    }
+  
+}
   }
 }
