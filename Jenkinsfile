@@ -1,14 +1,19 @@
-pipeline {
-  agent any
-  triggers {
-   cron('H/15 * * * *')
-  }
-  stages {
-    stage('echo') {
-      steps {
-        echo 'hello from the trigger2'
-      }
-    }
 
-  }
+  stages {
+        stage ('Download') {
+            steps {
+                rtDownload (
+                    serverId: "rmskone1_art",
+                    spec: """{
+                            "files": [
+                                    {
+                                        "pattern":"*.img",
+                                        "target": "default-generic-local"
+                                    }
+                                ]
+                            }"""
+                )
+            }
+        }
+    }
 }
